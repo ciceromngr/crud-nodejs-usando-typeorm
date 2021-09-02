@@ -6,5 +6,7 @@ const routes = Router()
 const usersControllers = new UsersControllers()
 
 routes.post("/users", usersControllers.handle)
+routes.put("/users/:id", usersControllers.atualizarUsuario)
+routes.delete("/users/:id", usersControllers.deleteUser)
 
 export { routes }

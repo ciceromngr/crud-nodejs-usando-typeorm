@@ -1,11 +1,12 @@
 import { getCustomRepository } from "typeorm"
+import { Users } from "../entities/Users"
 import { UsersRepositories } from "../repositories/UsersRepositories"
 
 export interface IUsersRequest {
     nome: string
 }
 
-class UsersSerives {
+class UsersServices {
 
     async execute({ nome }: IUsersRequest) {
 
@@ -27,6 +28,32 @@ class UsersSerives {
 
     }
 
+    async updateUser(id: string, nome: string) {
+
+        const usersRepositories = getCustomRepository(UsersRepositories)
+
+        if (!id) throw new Error("Usuario Invalido!")
+
+        const useraffected = await usersRepositories.createQueryBuilder()
+            .update(Users)
+            .set({ nome })
+            .where("id = :id", { id }).execute()
+
+        if(useraffected.affected === 1){
+            const user = await usersRepositories.findOne(id)
+            return user
+        }
+    }
+
+    async deleteUser(id: string) {
+
+        const usersRepositories = getCustomRepository(UsersRepositories)
+
+        const userDeleted = await usersRepositories.delete(id)
+
+        return userDeleted
+
+    }
 }
 
-export { UsersSerives }
+export { UsersServices }
