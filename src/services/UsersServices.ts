@@ -28,6 +28,15 @@ class UsersServices {
 
     }
 
+
+    async getAllusers() {
+        const usersRepositories = getCustomRepository(UsersRepositories)
+
+        const users = await usersRepositories.find()
+        
+        return users
+    }
+
     async updateUser(id: string, nome: string) {
 
         const usersRepositories = getCustomRepository(UsersRepositories)

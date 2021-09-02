@@ -12,6 +12,13 @@ class UsersControllers {
         return response.json(user)
     }
 
+    async getAllUsers(request: Request, response: Response) {
+        const usersServices = new UsersServices()
+        const users = await usersServices.getAllusers()
+
+        return response.json(users)
+    }
+
     async atualizarUsuario(request: Request, response: Response) {
         const { nome } = request.body
         const { id } = request.params
